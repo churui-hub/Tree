@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二胡 · 千年弦音</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #2d4a3d;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90vw;
+            height: 90vh;
+            max-width: 1920px;
+            max-height: 1080px;
+            background: #f5f3f0;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 80px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .slide.dark {
+            background: #2d4a3d;
+            color: #f5f3f0;
+        }
+
+        .slide.light {
+            background: #f5f3f0;
+            color: #2d4a3d;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: 0.04em;
+        }
+
+        .slide.dark h1 { color: #d4a574; }
+        .slide.dark h2 { color: #d4a574; }
+        .slide.light h2 { color: #a85c3e; }
+
+        .subtitle {
+            font-size: 32px;
+            margin-top: 20px;
+            opacity: 0.9;
+            letter-spacing: 0.05em;
+        }
+
+        .content {
+            font-size: 24px;
+            line-height: 1.8;
+            max-width: 1400px;
+            margin-top: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+            max-width: 1500px;
+            margin-top: 40px;
+        }
+
+        .grid-item {
+            background: #2d4a3d;
+            color: #f5f3f0;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .slide.light .grid-item {
+            background: #2d4a3d;
+            color: #f5f3f0;
+        }
+
+        .grid-item-title {
+            font-size: 36px;
+            color: #d4a574;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .grid-item-content {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .list {
+            list-style: none;
+            text-align: left;
+            max-width: 1200px;
+        }
+
+        .list li {
+            font-size: 20px;
+            margin: 20px 0;
+            padding-left: 40px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .slide.light .list li { color: #2d4a3d; }
+        .slide.dark .list li { color: #f5f3f0; }
+
+        .list li::before {
+            content: "◆";
+            position: absolute;
+            left: 0;
+            color: #d4a574;
+            font-size: 14px;
+        }
+
+        .divider {
+            width: 100px;
+            height: 2px;
+            background: #a85c3e;
+            margin: 20px auto;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 8px;
+        }
+
+        .controls button {
+            background: #d4a574;
+            border: none;
+            color: #2d4a3d;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .controls button:hover {
+            background: #a85c3e;
+            color: #f5f3f0;
+        }
+
+        .page-num {
+            color: #f5f3f0;
+            font-size: 14px;
+            padding: 10px 15px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .slide.active {
+                animation: fadeIn 0.5s ease-out;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 1 -->
+        <section class="slide dark active">
+            <h1>二胡</h1>
+            <div class="divider"></div>
+            <p class="subtitle">千年弦音</p>
+            <p class="subtitle" style="font-size: 20px; margin-top: 40px;">中国传统拉弦乐器</p>
+        </section>
+
+        <!-- Slide 2 -->
+        <section class="slide light">
+            <h2>目录</h2>
+            <div class="grid">
+                <div class="grid-item">
+                    <div class="grid-item-title">一</div>
+                    <div class="grid-item-content">二胡起源<br/>与历史</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-title">二</div>
+                    <div class="grid-item-content">二胡构造<br/>与材质</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-title">三</div>
+                    <div class="grid-item-content">二胡音色<br/>特点</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-title">四</div>
+                    <div class="grid-item-content">演奏技法<br/>与技巧</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-title">五</div>
+                    <div class="grid-item-content">经典曲目<br/>赏析</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-title">六</div>
+                    <div class="grid-item-content">二胡名家<br/>介绍</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3 -->
+        <section class="slide dark">
+            <h2 style="color: #d4a574;">一. 二胡起源与历史</h2>
+            <p class="subtitle">探寻千年弦音 · 传承国乐之美</p>
+        </section>
+
+        <!-- Slide 4 -->
+        <section class="slide light">
+            <h2>历代发展脉络</h2>
+            <ul class="list">
+                <li><strong>唐代</strong> — 二胡起源于唐代，由北方少数民族传入中原，最初称为"奚琴"。</li>
+                <li><strong>宋代</strong> — 宋代时期为"撮琴"，用于宫廷雅乐和民间演奏。逐渐融入汉族音乐文化。</li>
+                <li><strong>明清</strong> — 形成了现代二胡的基本形制，成为现代二胡的雏形。广泛应用于民间戏曲伴奏。</li>
+                <li><strong>当代</strong> — 成为中华民族音乐的代表乐器，被誉为"东方的歌唱者"。</li>
+            </ul>
+        </section>
+
+        <!-- Slide 5 -->
+        <section class="slide dark">
+            <h2 style="color: #d4a574;">二. 二胡构造与材质</h2>
+            <p class="subtitle">探寻传统乐器之美 · 传承匠心工艺之道</p>
+        </section>
+
+        <!-- Slide 6 -->
+        <section class="slide light">
+            <h2>琴体结构解析</h2>
+            <ul class="list">
+                <li><strong>琴筒</strong> — 呈筒状、八角形，是琴声的共鸣体，决定音色的特点。</li>
+                <li><strong>琴杆</strong> — 红木、紫木制成，长约80厘米，连接琴筒和琴头。</li>
+                <li><strong>琴轴</strong> — 上下各两个，用于调节弦音。</li>
+                <li><strong>琴弦</strong> — 竹筋为弦，马尾弦，影响音色和音质。</li>
+                <li><strong>琴弓</strong> — 用竹子或木材制成，长约80厘米，是演奏的关键。</li>
+            </ul>
+        </section>
+
+        <!-- Slide 7 -->
+        <section class="slide dark">
+            <h2 style="color: #d4a574;">三. 二胡音色特点</h2>
+            <p class="subtitle">音色解析 · 表现力 · 情感传达</p>
+        </section>
+
+        <!-- Slide 8 -->
+        <section class="slide light">
+            <h2>独特的音乐语言</h2>
+            <div class="grid">
+                <div class="grid-item">
+                    <div class="grid-item-title">柔美抒情</div>
+                    <div class="grid-item-content">二胡音色美妙如泣如诉，最接近人声，能深刻表达内心情感。</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-title">音域宽广</div>
+                    <div class="grid-item-content">音域跨越三个八度，从低沉浑厚到高亮明亮，表现力丰富。</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-title">情感深邃</div>
+                    <div class="grid-item-content">通过揉弦、滑音、跳弓等技法，能表现细腻、深沉、激烈等多种情感。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9 -->
+        <section class="slide dark">
+            <h2 style="color: #d4a574;">四. 演奏技法与技巧</h2>
+            <p class="subtitle">传承国乐精粹 · 探索演奏之美</p>
+        </section>
+
+        <!-- Slide 10 -->
+        <section class="slide light">
+            <h2>核心演奏技法</h2>
+            <ul class="list">
+                <li><strong>右手弓法</strong> — 长弓、短弓、颤弓、跳弓等，控制音色和力度变化。</li>
+                <li><strong>左手指法</strong> — 按音、滑音、颤音等，决定音色和音质装饰。</li>
+                <li><strong>拨弦技法</strong> — 浚拨、压拨、滑拨等，是二胡表现力的核心技巧。</li>
+                <li><strong>换把技巧</strong> — 快速换把、跳把等，扩展表现范围。</li>
+            </ul>
+        </section>
+
+        <!-- Slide 11 -->
+        <section class="slide dark">
+            <h2 style="color: #d4a574;">五. 经典曲目赏析</h2>
+            <p class="subtitle">品味经典 · 感受二胡之美</p>
+        </section>
+
+        <!-- Slide 12 -->
+        <section class="slide light">
+            <h2>十大经典曲目（上）</h2>
+            <ul class="list">
+                <li><strong>《二泉映月》</strong> — 阿炳 · 最负盛名的二胡独奏曲，悲怆深沉。</li>
+                <li><strong>《良宵》</strong> — 刘天华 · 欢快朗朗，节日气氛浓郁。</li>
+                <li><strong>《赛马》</strong> — 黄海怀 · 气势磅礴，展现草原风情。</li>
+                <li><strong>《光明行》</strong> — 刘天华 · 进行曲风格，振奋人心。</li>
+                <li><strong>《空山鸟语》</strong> — 刘天华 · 模拟鸟鸣，自然意境。</li>
+            </ul>
+        </section>
+
+        <!-- Slide 13 -->
+        <section class="slide light">
+            <h2>十大经典曲目（下）</h2>
+            <ul class="list">
+                <li><strong>《江河水》</strong> — 东北民间 · 悲凉沉郁，如泣如诉。</li>
+                <li><strong>《月夜》</strong> — 刘天华 · 宁静优美，持情画意。</li>
+                <li><strong>《独弦操红》</strong> — 刘天华 · 古典韵味，委婉动人。</li>
+                <li><strong>《听松》</strong> — 阿炳 · 豪迈奔放，松涛声声。</li>
+                <li><strong>《寒春风曲》</strong> — 阿炳 · 清冷孤寂，意境深远。</li>
+            </ul>
+        </section>
+
+        <!-- Slide 14 -->
+        <section class="slide dark">
+            <h2 style="color: #d4a574;">六. 二胡名家介绍</h2>
+            <p class="subtitle">传承国乐经典 · 领略二胡之美</p>
+        </section>
+
+        <!-- Slide 15 -->
+        <section class="slide light">
+            <h2>历代二胡大师</h2>
+            <ul class="list">
+                <li><strong>阿炳（华彦钧）</strong> — 民间音乐家，创作《二泉映月》等不朽名曲。</li>
+                <li><strong>刘天华</strong> — 现代二胡奠基人，创作十二胡名曲，建立二胡教学体系。</li>
+                <li><strong>闵惠芬</strong> — 当代二胡大师，演奏《江河水》感动无数听众。</li>
+                <li><strong>宋飞</strong> — 著名二胡演奏家，教育家，推动二胡艺术普及和发展。</li>
+            </ul>
+        </section>
+
+        <!-- Slide 16 -->
+        <section class="slide light">
+            <h2>当代二胡大家</h2>
+            <ul class="list">
+                <li><strong>于红梅</strong> — 中央音乐学院教授，国际知名二胡演奏家，享誉世界乐坛。</li>
+                <li><strong>陈军</strong> — 二胡演奏家、教育家，推动二胡艺术的创新发展。</li>
+                <li><strong>更多优秀演奏家</strong> — 如今二胡已成为中华民族音乐的代表乐器。</li>
+            </ul>
+        </section>
+
+        <!-- Slide 17 -->
+        <section class="slide dark">
+            <h1 style="color: #d4a574;">弦歌不辍</h1>
+            <div class="divider"></div>
+            <p class="subtitle">薪火相传</p>
+            <p class="subtitle" style="font-size: 20px; margin-top: 40px;">传承千年文化 · 弘扬国乐之美</p>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button onclick="prevSlide()">← 上一页</button>
+        <span class="page-num"><span id="current">1</span> / 17</span>
+        <button onclick="nextSlide()">下一页 →</button>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[n].classList.add('active');
+            document.getElementById('current').textContent = n + 1;
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            showSlide(currentIndex);
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        showSlide(0);
+    </script>
+</body>
+</html>
