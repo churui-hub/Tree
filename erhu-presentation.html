@@ -42,14 +42,20 @@
             width: 1920px;
             height: 1080px;
             overflow: hidden;
-            display: block;
+            display: flex;
             visibility: hidden;
             opacity: 0;
             pointer-events: none;
             background: var(--slide-bg, #f5f3f0);
         }
 
-        .slide.active,
+        .slide.active {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 10;
+        }
+
         .slide.visible {
             visibility: visible;
             opacity: 1;
