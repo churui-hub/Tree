@@ -64,17 +64,6 @@
             border-color: #d4a574;
         }
 
-        .toolbar .edit-btn {
-            background: linear-gradient(90deg, #d4a574, #c89450);
-            border: 0;
-            color: #2d4a3d;
-            font-weight: 700;
-        }
-
-        .toolbar .edit-btn:hover {
-            background: linear-gradient(90deg, #a85c3e, #963d24);
-            color: #f5f3f0;
-        }
 
         .page-select {
             max-width: 180px;
@@ -242,118 +231,6 @@
             line-height: 1.6;
         }
 
-        /* ===== 编辑器 ===== */
-        .editor-mask {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 50;
-            background: rgba(45, 74, 61, 0.5);
-        }
-
-        .editor-mask.open {
-            display: block;
-        }
-
-        .editor {
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: min(460px, 100%);
-            display: flex;
-            flex-direction: column;
-            background: #fff;
-            box-shadow: -14px 0 50px rgba(45, 74, 61, 0.2);
-            animation: slideInEditor 0.3s ease-out;
-        }
-
-        @keyframes slideInEditor {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
-        }
-
-        .editor-header {
-            padding: 20px 22px;
-            background: linear-gradient(135deg, #2d4a3d, #a85c3e);
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .editor-header h2 {
-            font-size: 18px;
-            margin: 0;
-            color: #d4a574;
-        }
-
-        .editor-header button {
-            background: none;
-            border: 0;
-            color: #fff;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .editor-body {
-            padding: 20px;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .editor-field {
-            margin-bottom: 18px;
-        }
-
-        .editor-field label {
-            display: block;
-            font-weight: 600;
-            color: #2d4a3d;
-            margin-bottom: 6px;
-            font-size: 13px;
-        }
-
-        .editor-field input,
-        .editor-field textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-family: 'Noto Serif SC', serif;
-            font-size: 13px;
-        }
-
-        .editor-field textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .editor-foot {
-            padding: 15px 20px;
-            display: flex;
-            gap: 9px;
-            border-top: 1px solid #eee;
-        }
-
-        .editor-foot button {
-            flex: 1;
-            padding: 10px;
-            border: 0;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .editor-foot .cancel-btn {
-            background: #eee;
-            color: #2d4a3d;
-        }
-
-        .editor-foot .save-btn {
-            background: linear-gradient(135deg, #d4a574, #c89450);
-            color: #2d4a3d;
-        }
 
         /* ===== 响应式 ===== */
         @media(max-width: 960px) {
@@ -410,16 +287,6 @@
             }
         }
 
-        [contenteditable="true"] {
-            outline: 2px dashed #d4a574;
-            outline-offset: 2px;
-            padding: 2px 4px;
-            cursor: text;
-        }
-
-        [contenteditable="true"]:hover {
-            background: rgba(212, 165, 116, 0.05);
-        }
     </style>
 </head>
 <body>
@@ -427,29 +294,14 @@
     <header class="toolbar">
         <span class="logo">二胡<span class="dot">·</span>千年弦音</span>
         <span class="caption">完整预览</span>
-        <button class="edit-btn" id="editBtn" onclick="openEditor()">✏️ 编辑</button>
     </header>
-
-    <!-- 编辑器 -->
-    <div class="editor-mask" id="editorMask" onclick="closeEditor()"></div>
-    <div class="editor" id="editor" onclick="event.stopPropagation()">
-        <div class="editor-header">
-            <h2 id="editorTitle">编辑内容</h2>
-            <button onclick="closeEditor()">✕</button>
-        </div>
-        <div class="editor-body" id="editorBody"></div>
-        <div class="editor-foot">
-            <button class="cancel-btn" onclick="closeEditor()">取消</button>
-            <button class="save-btn" onclick="saveEditor()">保存</button>
-        </div>
-    </div>
 
     <!-- 主容器 -->
     <main>
         <!-- 幻灯片 1 -->
         <section class="slide dark">
             <div style="text-align: center; padding: 80px 0;">
-                <h1 contenteditable="false">二胡</h1>
+                <h1>二胡</h1>
                 <div class="divider" style="margin-left: auto; margin-right: auto;"></div>
                 <p class="subtitle">千年弦音</p>
                 <p class="tagline">中国传统拉弦乐器</p>
@@ -650,60 +502,5 @@
         </section>
     </main>
 
-    <script>
-        let currentEditElement = null;
-
-        function openEditor() {
-            document.getElementById('editorMask').classList.add('open');
-            document.getElementById('editor').style.display = 'flex';
-        }
-
-        function closeEditor() {
-            document.getElementById('editorMask').classList.remove('open');
-            document.getElementById('editor').style.display = 'none';
-            currentEditElement = null;
-        }
-
-        function saveEditor() {
-            if (currentEditElement) {
-                const fields = document.querySelectorAll('.editor-field input, .editor-field textarea');
-                fields.forEach(field => {
-                    const content = field.value;
-                    if (field.id && currentEditElement[field.id]) {
-                        currentEditElement[field.id].textContent = content;
-                    }
-                });
-            }
-            closeEditor();
-        }
-
-        // 支持点击幻灯片内容编辑
-        document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-            el.addEventListener('click', function(e) {
-                e.stopPropagation();
-                currentEditElement = this;
-                const text = this.textContent;
-                document.getElementById('editorTitle').textContent = '编辑: ' + (this.tagName || '文本');
-                document.getElementById('editorBody').innerHTML = `
-                    <div class="editor-field">
-                        <label>内容</label>
-                        <textarea id="editContent">${text}</textarea>
-                    </div>
-                `;
-                document.getElementById('editContent').addEventListener('blur', function() {
-                    currentEditElement.textContent = this.value;
-                });
-                openEditor();
-            });
-        });
-
-        // 添加样式优化
-        document.addEventListener('DOMContentLoaded', function() {
-            // 使所有幻灯片标题都可编辑
-            document.querySelectorAll('h1, h2').forEach(heading => {
-                heading.setAttribute('contenteditable', 'true');
-            });
-        });
-    </script>
 </body>
 </html>
