@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二胡体验 - 卡片1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5ede1 0%, #faf7f2 100%);
+            color: #4a3728;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .card-wrapper {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .welcome-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2.5rem;
+            background: linear-gradient(135deg, #8b6f47 0%, #a0845f 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 8px 24px rgba(139, 111, 71, 0.15);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .welcome-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #5d4a37;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.3rem;
+            color: #9b8b7e;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+
+        .welcome-desc {
+            font-size: 1.15rem;
+            color: #7a6b5d;
+            margin: 2.5rem 0;
+            line-height: 1.9;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        .welcome-by {
+            margin-top: 4rem;
+            font-size: 0.95rem;
+            color: #b8a895;
+            font-weight: 500;
+            letter-spacing: 2px;
+            animation: fadeInUp 1s ease-out 0.8s backwards;
+        }
+
+        .scroll-hint {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 4rem;
+            font-size: 0.95rem;
+            color: #9b8b7e;
+            animation: bounce 2s infinite 1s;
+        }
+
+        .scroll-hint svg {
+            width: 28px;
+            height: 28px;
+            stroke: #c4a878;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .accent-line {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #c4a878, transparent);
+            margin: 1.5rem auto 0;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(12px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2.8rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .welcome-desc {
+                font-size: 1rem;
+            }
+
+            .welcome-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 3rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-wrapper">
+        <div class="welcome-icon">🎻</div>
+        <h1 class="welcome-title">二胡</h1>
+        <div class="accent-line"></div>
+        <div class="welcome-subtitle">Erhu Experience</div>
+        <p class="welcome-desc">
+            一起探索中国传统乐器的魅力<br>
+            感受悠扬琴声的诗意
+        </p>
+        <div class="welcome-by">By Tree</div>
+
+        <div class="scroll-hint">
+            <span>向下滚动开始</span>
+            <svg viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </div>
+</body>
+</html>
