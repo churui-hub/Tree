@@ -34,14 +34,15 @@
             width: 120px;
             height: 120px;
             margin: 0 auto 2.5rem;
-            background: linear-gradient(135deg, #8b6f47 0%, #a0845f 100%);
-            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
-            box-shadow: 0 8px 24px rgba(139, 111, 71, 0.15);
             animation: fadeInDown 1s ease-out;
+        }
+
+        .erhu-silhouette {
+            width: 100%;
+            height: 100%;
         }
 
         .welcome-title {
@@ -169,7 +170,30 @@
 </head>
 <body>
     <div class="card-wrapper">
-        <div class="welcome-icon">🎻</div>
+        <div class="welcome-icon">
+            <svg class="erhu-silhouette" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- 琴筒 -->
+                <ellipse cx="50" cy="80" rx="35" ry="40" fill="#5d4a37"/>
+
+                <!-- 琴杆 -->
+                <rect x="47" y="20" width="6" height="140" fill="#5d4a37"/>
+
+                <!-- 琴头 -->
+                <circle cx="50" cy="15" r="8" fill="#5d4a37"/>
+
+                <!-- 琴弦（左） -->
+                <line x1="45" y1="15" x2="40" y2="110" stroke="#5d4a37" stroke-width="1.5"/>
+
+                <!-- 琴弦（右） -->
+                <line x1="55" y1="15" x2="60" y2="110" stroke="#5d4a37" stroke-width="1.5"/>
+
+                <!-- 琴马 -->
+                <path d="M 43 95 Q 50 92 57 95" stroke="#5d4a37" stroke-width="2" fill="none"/>
+
+                <!-- 千斤 -->
+                <rect x="46" y="50" width="8" height="12" fill="#5d4a37"/>
+            </svg>
+        </div>
         <h1 class="welcome-title">二胡</h1>
         <div class="accent-line"></div>
         <div class="welcome-subtitle">Erhu Experience</div>
