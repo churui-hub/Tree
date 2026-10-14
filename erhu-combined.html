@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二胡体验 - 卡片式演示</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5ede1 0%, #faf7f2 100%);
+            color: #4a3728;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+
+        .card-section {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            scroll-snap-align: start;
+        }
+
+        .card-section.card1 {
+            background: linear-gradient(135deg, #f5ede1 0%, #faf7f2 100%);
+        }
+
+        .card-section.card2 {
+            background: linear-gradient(135deg, #f5ede1 0%, #faf7f2 100%);
+        }
+
+        /* Card 1 Styles */
+        .card-wrapper {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .welcome-icon {
+            width: 150px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            background-image: url('erhu-transparent.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .welcome-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #5d4a37;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.3rem;
+            color: #9b8b7e;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+
+        .accent-line {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #c4a878, transparent);
+            margin: 1.5rem auto 0;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .welcome-desc {
+            font-size: 1.15rem;
+            color: #7a6b5d;
+            margin: 2.5rem 0;
+            line-height: 1.9;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        .welcome-by {
+            margin-top: 4rem;
+            font-size: 0.95rem;
+            color: #b8a895;
+            font-weight: 500;
+            letter-spacing: 2px;
+            animation: fadeInUp 1s ease-out 0.8s backwards;
+        }
+
+        .scroll-hint {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 4rem;
+            font-size: 0.95rem;
+            color: #9b8b7e;
+            animation: bounce 2s infinite 1s;
+        }
+
+        .scroll-hint svg {
+            width: 28px;
+            height: 28px;
+            stroke: #c4a878;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Card 2 Styles */
+        .card2-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            gap: 2.5rem;
+            align-items: flex-start;
+        }
+
+        .image-container {
+            flex: 1;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .erhu-diagram {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.12));
+            border-radius: 8px;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .content-section {
+            flex: 1;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #5d4a37;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .card-subtitle {
+            font-size: 1rem;
+            color: #9b8b7e;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .question-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #c4a878;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .question-box.active {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            color: #5d4a37;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option-btn {
+            padding: 1rem;
+            border: 2px solid #d4c5b9;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #5d4a37;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        .option-btn:hover {
+            background: #f5ede1;
+            border-color: #c4a878;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct {
+            background: #c8e6c9;
+            border-color: #8bc34a;
+            color: #2e7d32;
+            cursor: not-allowed;
+        }
+
+        .option-btn.incorrect {
+            background: #ffcdd2;
+            border-color: #e57373;
+            color: #c62828;
+            cursor: not-allowed;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .explanation {
+            background: #fff9e6;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .explanation.active {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .explanation-title {
+            font-weight: 600;
+            color: #f57f17;
+            margin-bottom: 0.8rem;
+        }
+
+        .explanation-text {
+            font-size: 0.95rem;
+            color: #e65100;
+            line-height: 1.6;
+        }
+
+        .explanation-text li {
+            margin-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .start-game-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #c4a878 0%, #8b6f47 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Noto Sans SC', sans-serif;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .start-game-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(196, 168, 120, 0.4);
+        }
+
+        .start-game-btn:active {
+            transform: translateY(0);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(12px);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2.8rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .welcome-desc {
+                font-size: 1rem;
+            }
+
+            .welcome-icon {
+                width: 120px;
+                height: 160px;
+            }
+
+            .card2-wrapper {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .erhu-diagram {
+                max-width: 250px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Card 1: Welcome -->
+        <div class="card-section card1">
+            <div class="card-wrapper">
+                <div class="welcome-icon"></div>
+
+                <h1 class="welcome-title">二胡</h1>
+                <div class="accent-line"></div>
+                <div class="welcome-subtitle">Erhu Experience</div>
+
+                <p class="welcome-desc">
+                    一起探索中国传统乐器的魅力<br>
+                    感受悠扬琴声的诗意
+                </p>
+
+                <div class="welcome-by">By Tree</div>
+
+                <div class="scroll-hint">
+                    <span>向下滚动开始</span>
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Qianjin Game -->
+        <div class="card-section card2">
+        </div>
+    </div>
+
+    <script>
+        const clickZone = document.getElementById('clickZone');
+        const questionBox = document.getElementById('questionBox');
+        const explanation = document.getElementById('explanation');
+
+        let gameStarted = false;
+        let gameCompleted = false;
+
+        clickZone.onclick = function() {
+            if (!gameStarted) {
+                gameStarted = true;
+                questionBox.classList.add('active');
+            }
+        };
+
+        window.selectAnswer = function(answer) {
+            if (gameCompleted) return;
+
+            const buttons = document.querySelectorAll('.option-btn');
+            const correctAnswer = '千斤';
+
+            if (answer === correctAnswer) {
+                buttons.forEach(btn => {
+                    if (btn.textContent === correctAnswer) {
+                        btn.classList.add('correct');
+                    } else {
+                        btn.disabled = true;
+                    }
+                });
+                gameCompleted = true;
+                explanation.classList.add('active');
+            } else {
+                const clickedBtn = Array.from(buttons).find(btn => btn.textContent === answer);
+                if (clickedBtn) {
+                    clickedBtn.classList.add('incorrect');
+                    clickedBtn.disabled = true;
+                }
+            }
+        };
+    </script>
+</body>
+</html>
