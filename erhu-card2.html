@@ -176,13 +176,6 @@
             line-height: 1.8;
         }
 
-        .hint-text {
-            font-size: 0.9rem;
-            color: #9b8b7e;
-            margin-top: 1rem;
-            font-style: italic;
-        }
-
         .scroll-hint {
             display: flex;
             flex-direction: column;
@@ -311,10 +304,6 @@
                 </div>
             </div>
 
-            <div class="hint-text" id="hintText">
-                💡 点击左图中隐去的部分来开始游戏
-            </div>
-
             <div class="scroll-hint">
                 <span>向下滚动查看更多</span>
                 <svg viewBox="0 0 24 24">
@@ -328,16 +317,15 @@
         const clickZone = document.getElementById('clickZone');
         const questionBox = document.getElementById('questionBox');
         const explanation = document.getElementById('explanation');
-        const hintText = document.getElementById('hintText');
         const diagram = document.getElementById('erhoDiagram');
 
         let gameStarted = false;
-        let answered = false;
+        let gameCompleted = false;
 
         function setupClickZone() {
-            // 千斤位置：在琴杆上，大约在内外弦轴下方
-            // 根据图片比例调整
-            const topPercent = 32;
+            // 千斤位置：琴杆中间的白色线处
+            // 根据新图片调整位置
+            const topPercent = 28;
             const leftPercent = 50;
             const sizePercent = 8;
             
@@ -353,18 +341,17 @@
                 gameStarted = true;
                 clickZone.classList.add('active');
                 questionBox.classList.add('active');
-                hintText.style.display = 'none';
             }
         };
 
         window.selectAnswer = function(answer) {
-            if (answered) return;
+            if (gameCompleted) return;
             
-            answered = true;
             const buttons = document.querySelectorAll('.option-btn');
             
             if (answer === '千斤') {
-                // 正确答案
+                // 正确答案 - 游戏完成
+                gameCompleted = true;
                 buttons.forEach(btn => {
                     if (btn.textContent === '千斤') {
                         btn.classList.add('correct');
@@ -373,15 +360,11 @@
                 });
                 explanation.classList.add('show');
             } else {
-                // 错误答案
-                buttons.forEach(btn => {
-                    if (btn.textContent === answer) {
-                        btn.classList.add('incorrect');
-                    } else if (btn.textContent === '千斤') {
-                        btn.classList.add('correct');
-                    }
-                    btn.disabled = true;
-                });
+                // 错误答案 - 只标记这个按钮为错误，允许继续点击
+                const selectedBtn = Array.from(buttons).find(btn => btn.textContent === answer);
+                if (selectedBtn && !selectedBtn.classList.contains('incorrect')) {
+                    selectedBtn.classList.add('incorrect');
+                }
             }
         };
 
