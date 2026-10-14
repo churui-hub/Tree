@@ -607,6 +607,29 @@
 
         setupClickZone();
         window.addEventListener('resize', setupClickZone);
+
+        window.checkAnswer3 = function() {
+            const input = document.getElementById('answerInput');
+            const value = input.value.trim();
+            const explanation3 = document.getElementById('explanation3');
+            
+            if (value === '窗') {
+                explanation3.classList.add('active');
+                input.disabled = true;
+                document.querySelector('[onclick="checkAnswer3()"]').disabled = true;
+            } else if (value) {
+                input.style.borderColor = '#e57373';
+                input.value = '';
+                input.placeholder = '再试试';
+            }
+        };
+
+        document.getElementById('answerInput')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer3();
+            }
+        });
+
     </script>
 
         </div>
@@ -653,6 +676,29 @@
                 }
             }
         };
+
+        window.checkAnswer3 = function() {
+            const input = document.getElementById('answerInput');
+            const value = input.value.trim();
+            const explanation3 = document.getElementById('explanation3');
+            
+            if (value === '窗') {
+                explanation3.classList.add('active');
+                input.disabled = true;
+                document.querySelector('[onclick="checkAnswer3()"]').disabled = true;
+            } else if (value) {
+                input.style.borderColor = '#e57373';
+                input.value = '';
+                input.placeholder = '再试试';
+            }
+        };
+
+        document.getElementById('answerInput')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer3();
+            }
+        });
+
     </script>
 </body>
 </html>
