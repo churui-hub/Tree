@@ -361,22 +361,27 @@
             answered = true;
             const buttons = document.querySelectorAll('.option-btn');
             
-            buttons.forEach(btn => {
-                if (btn.textContent === answer) {
-                    if (answer === '千斤') {
-                        btn.classList.add('correct');
-                        explanation.classList.add('show');
-                    } else {
-                        btn.classList.add('incorrect');
-                    }
-                } else if (answer !== '千斤') {
+            if (answer === '千斤') {
+                // 正确答案
+                buttons.forEach(btn => {
                     if (btn.textContent === '千斤') {
                         btn.classList.add('correct');
-                        explanation.classList.add('show');
                     }
-                }
-                btn.disabled = true;
-            });
+                    btn.disabled = true;
+                });
+                explanation.classList.add('show');
+            } else {
+                // 错误答案
+                buttons.forEach(btn => {
+                    if (btn.textContent === answer) {
+                        btn.classList.add('incorrect');
+                    } else if (btn.textContent === '千斤') {
+                        btn.classList.add('correct');
+                    }
+                    btn.disabled = true;
+                });
+                // 不显示解释，让用户知道答错了
+            }
         };
 
         setupClickZone();
